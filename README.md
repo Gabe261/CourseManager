@@ -12,4 +12,5 @@ The 'manage course' view or the 'See Sharp' course displays all its students and
 ![CoursManagerItem](https://github.com/Gabe261/CourseManager/assets/114610936/307cc45f-b65a-4a87-94c8-75d96035fe41)
 
 The database view of all courses:
+
 ![image](https://github.com/Gabe261/CourseManager/assets/114610936/d30609ec-8e1b-4bdf-a717-c68182bd2b3c)
