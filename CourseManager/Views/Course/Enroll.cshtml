@@ -1,0 +1,30 @@
+﻿@model EnrollmentStudentViewModel
+@{
+    ViewData["Title"] = "Enroll";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="my-3">
+    <h6>@Model?.Student?.Course?.Name</h6>
+    <p>@Model?.Student?.StudentName</p>
+    @Model?.Student?.Course?.Instructor @Model?.Student?.Course?.RoomNumber @Model?.Student?.Course?.StartDate?.ToString("d");
+</div>
+
+<form method="post" asp-controller="Course" asp-action="Enroll" asp-route-courseId="@Model?.Student?.CourseId" asp-route-studentId="@Model?.Student?.StudentId">
+    
+    <label class="form-label mx-3" asp-for="Response"> Do you want to enroll</label>
+
+    <div class="form-check form-check-inline">
+        <input type="radio" class="form-check-input" asp-for="Response" value="Yes" />
+        <label class="form-check-label" asp-for="Response">Yes</label>
+    </div>
+
+    <div class="form-check form-check-inline">
+        <input type="radio" class="form-check-input" asp-for="Response" value="No" />
+        <label class="form-check-label" asp-for="Response">No</label>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+
+</form>

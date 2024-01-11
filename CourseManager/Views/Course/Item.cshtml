@@ -1,0 +1,76 @@
+﻿@model ManageCourseViewModel
+
+@{
+    ViewData["Title"] = $"Manage Your course";
+    <!-- Dictionary for Student Status -->
+    var StatusDictionary = new Dictionary<StudentStatus, string>
+            {
+                [StudentStatus.ConfirmationMessageNotSent] = "Enrollment confirmation not sent",
+                [StudentStatus.ConfirmationMessageSent] = "Enrollment confirmation sent",
+                [StudentStatus.EnrollmentConfirmed] = "Enrollment confirmed",
+                [StudentStatus.EnrollmentDenied] = "Enrollment decliend"
+            };
+}
+
+<div>
+    <h3>Course summary:</h3>
+    <p>
+        The course "@Model.Course.Name" is in room @Model.Course.RoomNumber starting on
+        @Model.Course.StartDate?.ToString("d") and the instructors name is
+        @Model.Course.Instructor
+    </p>
+    <p>
+        Invites not sent: @Model.ConfirmationMessageNotSentCount &nbsp;
+        Sent count: @Model.ConfirmationMessageSentCount &nbsp;
+        Confirmed count: @Model.EnrollmentConfirmedCount &nbsp;
+        Declined count: @Model.EnrollmentDeniedCount &nbsp;
+    </p>
+    <h3>Students</h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Enrollment Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Student s in Model.Course.Students)
+            {
+                <tr>
+                    <td>@s.StudentName</td>
+                    <td>@s.StudentEmail</td>
+                    <td>@s.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <form asp-controller="Course" asp-action="AddStudentToCourseById" asp-route-id="@Model.Course.CourseId" method="post" enctype="application/x-www-form-urlencoded">
+        <div class="text-danger" asp-validation-summary="All"></div>
+        <div class="student-form">
+            <div class="col-sm-3 student-form">
+                <label class="form-control" asp-for="NewStudent.StudentName">Name</label>
+                <input class="form-control" type="text" asp-for="NewStudent.StudentName" />
+            </div>
+
+            <div class="col-sm-7 student-form">
+                <label class="form-control" asp-for="NewStudent.StudentEmail">Email</label>
+                <input class="form-control" type="text" asp-for="NewStudent.StudentEmail" />
+            </div>
+
+            <input type="hidden" asp-for="NewStudent.Status" value="0"/>
+
+            <div class="col-sm-2 student-form">
+                <button type="submit" class="btn btn-primary">Create Student</button>
+            </div>
+        </div>
+
+    </form>
+
+    <br />
+    <form asp-controller="Course" asp-action="SendEmail" asp-route-id="@Model.Course.CourseId" 
+    method="post" enctype="application/x-www-form-urlencoded">
+        <button type="submit" class="btn btn-primary">Send Confirmation Messages</button>
+    </form>
+</div>

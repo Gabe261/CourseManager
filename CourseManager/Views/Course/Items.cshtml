@@ -1,0 +1,38 @@
+﻿@model List<Course>
+@{
+    ViewData["Title"] = "View All Courses";
+}
+
+<div>
+    <h1>All my courses</h1>
+    <p><a asp-controller="Course" asp-action="GetAddCourseForm">Add a new course</a></p>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Instructor</th>
+                <th>Start Date</th>
+                <th>Room #</th>
+                <th># of Students</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Course c in Model)
+            {
+                <tr>
+                    <td>@c.Name</td>
+                    <td>@c.Instructor</td>
+                    <td>@c.StartDate?.ToString("d")</td>
+                    <td>@c.RoomNumber</td>
+                    <td>@c.Students.Count()</td>
+                    <td>
+                        <a asp-controller="Course" asp-action="GetCourseById" asp-route-id="@c.CourseId">Manage</a>
+                        <span>|</span>
+                        <a asp-controller="Course" asp-action="GetEditCourseFormById" asp-route-id="@c.CourseId">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
